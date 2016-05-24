@@ -26,6 +26,10 @@ public class GridKey {
 		key = _key;
 	}
 	
+	public void printArray(int[][] _key) {
+		//stuff
+	}
+	
 	public String toString() {
 		String rStr = "";
 		for (int i = 0; i < key.length; i++) {
