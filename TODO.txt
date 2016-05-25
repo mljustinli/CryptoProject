@@ -1,5 +1,3 @@
 Todo
-- Work on decryption
-- ...?
-- Ask questions
+- Generate random key
 - Add way to ask user where to save output of stuff
