@@ -11,6 +11,8 @@ public class Main {
 		String inputFile = "", saveFile = "", gridFile = "";
 		String input = "";
 		
+		System.out.println(GridKey.isValidKey(GridKey.genRandomKey(scan)));
+		
 		while (!input.equals("Q") && !input.equals("q")) {
 			menu.printOptionList();
 			input = scan.nextLine();

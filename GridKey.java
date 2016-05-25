@@ -24,35 +24,6 @@ public class GridKey {
 		
 	}
 	
-	public int[][] getKey(String dir) {
-		int[][] rKey = new int[8][8];
-		
-		switch (dir) {
-		case "North":
-			rKey = key;
-			break;
-		case "East":
-			for (int i = 0; i < key.length; i++)
-				for (int j = 0; j < key[0].length; j++)
-					rKey[j][key[0].length - i - 1] = key[i][j];
-			break;
-		case "South":
-			for (int i = 0; i < key.length; i++)
-				for (int j = 0; j < key[0].length; j++)
-					rKey[key.length - i - 1][key[0].length - j - 1] = key[i][j];
-			break;
-		case "West":
-			for (int i = 0; i < key.length; i++)
-				for (int j = 0; j < key[0].length; j++)
-					rKey[key.length - j - 1][i] = key[i][j];
-			break;
-		default:
-			System.out.println("Something went wrong in the switch statement!");
-		}
-		
-		return rKey;
-	}
-	
 	public String encrypt(String text) {
 		String newText = "";
 		for (int i = 0; i < 64 - text.length(); i++) {
@@ -65,7 +36,7 @@ public class GridKey {
 		String[][] rArr = new String[8][8];
 		int count = 0;
 		for (int d = 0; d < DIRS.length; d++) {
-			int[][] nKey = getKey(DIRS[d]);
+			int[][] nKey = getKey(DIRS[d], key);
 			for (int i = 0; i < nKey.length; i++) {
 				for (int j = 0; j < nKey[0].length; j++) {
 					if (nKey[i][j] == 1) {
@@ -98,7 +69,7 @@ public class GridKey {
 		}
 		
 		for (int d = DIRS.length - 1; d >= 0; d--) {
-			int[][] nKey = getKey(DIRS[d]);
+			int[][] nKey = getKey(DIRS[d], key);
 			for (int i = nKey.length - 1; i >= 0; i--) {
 				for (int j = nKey[0].length - 1; j >= 0; j--) {
 					if (nKey[i][j] == 1) {
@@ -151,8 +122,60 @@ public class GridKey {
 	 * Static functions
 	 */
 	
-	public static GridKey genRandomKey(Scanner scan) {
+	public static int[][] getKey(String dir, int[][] key) {
+		int[][] rKey = new int[8][8];
 		
+		switch (dir) {
+		case "North":
+			rKey = key;
+			break;
+		case "East":
+			for (int i = 0; i < key.length; i++)
+				for (int j = 0; j < key[0].length; j++)
+					rKey[j][key[0].length - i - 1] = key[i][j];
+			break;
+		case "South":
+			for (int i = 0; i < key.length; i++)
+				for (int j = 0; j < key[0].length; j++)
+					rKey[key.length - i - 1][key[0].length - j - 1] = key[i][j];
+			break;
+		case "West":
+			for (int i = 0; i < key.length; i++)
+				for (int j = 0; j < key[0].length; j++)
+					rKey[key.length - j - 1][i] = key[i][j];
+			break;
+		default:
+			System.out.println("Something went wrong in the switch statement!");
+		}
+		
+		return rKey;
+	}
+	
+	public static GridKey genRandomKey(Scanner scan) {
+		int[][] key = new int[8][8];
+		
+		String dir;
+		
+		for (int i = 0; i < 4; i++) {
+			for (int j = 0; j < 4; j++) {
+				dir = DIRS[(int)(Math.random() * 4)];
+				switch(dir) {
+				case "North":
+					key[i][j] = 1;
+					break;
+				case "East":
+					key[j][key[0].length - i - 1] = 1;
+					break;
+				case "South":
+					key[key.length - i - 1][key[0].length - j - 1] = 1;
+					break;
+				case "West":
+					key[key.length - j - 1][i] = 1;
+					break;
+				}
+			}
+		}
+		return new GridKey(key);
 	}
 	
 	public static boolean isValidKey(GridKey gk) {
