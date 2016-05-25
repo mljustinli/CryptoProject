@@ -44,8 +44,8 @@ public class Main {
 					fileIO = new Scanner(new File(inputFile));
 					System.out.println("The result is:");
 					while (fileIO.hasNextLine()) {
-//						System.out.println(gk.decrypt(fileIO.nextLine()));
-						System.out.println(fileIO.nextLine());
+						System.out.println(gk.decrypt(fileIO.nextLine()));
+//						System.out.println(fileIO.nextLine());
 					}
 					System.out.println();
 				} catch (FileNotFoundException e) {
@@ -53,9 +53,13 @@ public class Main {
 				}
 				break;
 			case "3":
-				gk = menu.promptForGrid(scan);
+				gk = menu.promptForGridFile(scan);
 				break;
 			case "4":
+				gk = menu.promptForGridManually(scan);
+				break;
+			case "5":
+				gk = GridKey.genRandomKey(scan);
 				break;
 			case "Q":
 			case "q":

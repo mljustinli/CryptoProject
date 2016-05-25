@@ -86,7 +86,37 @@ public class GridKey {
 	}
 	
 	public String decrypt(String text) {
+		String[][] strArr = new String[8][8];
+		String rText = "";
 		
+		int count = 0;
+		for (int i = 0; i < strArr.length; i++) {
+			for (int j = 0; j < strArr[0].length; j++) {
+				strArr[i][j] = text.charAt(count) + "";
+				count++;
+			}
+		}
+		
+		for (int d = DIRS.length - 1; d >= 0; d--) {
+			int[][] nKey = getKey(DIRS[d]);
+			for (int i = nKey.length - 1; i >= 0; i--) {
+				for (int j = nKey[0].length - 1; j >= 0; j--) {
+					if (nKey[i][j] == 1) {
+						rText += strArr[i][j];
+					}
+				}
+			}
+		}
+		
+		return stripCaret(rText);
+	}
+	
+	public static String stripCaret(String text) {
+		if (text.indexOf("^") == -1) {
+			return text;
+		} else {
+			return text.substring(0, text.indexOf("^"));
+		}
 	}
 	
 	public void setKey(int[][] _key) {
@@ -121,7 +151,7 @@ public class GridKey {
 	 * Static functions
 	 */
 	
-	public static GridKey genRandomKey() {
+	public static GridKey genRandomKey(Scanner scan) {
 		
 	}
 	

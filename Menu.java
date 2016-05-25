@@ -15,7 +15,9 @@ public class Menu {
 		return scan.nextLine();
 	}
 	
-	public GridKey promptForGrid(Scanner scan) {
+	public GridKey promptForGridFile(Scanner scan) {
+		System.out.println("The grid key file should by 8x8 "
+				+ "with 1s representing holes and 0s representing non holes.");
 		String fileName = promptForInputFile(scan);	
 		System.out.println();
 		Scanner io;
@@ -64,12 +66,63 @@ public class Menu {
 		}
 	}
 	
+	public GridKey promptForGridManually(Scanner scan) {
+		String line = "";
+		int[][] key = new int[8][8];
+		
+		System.out.println("Enter the grid key row by row. Each row should by 8 digits long. ");
+		System.out.println("Press return after each row. A hole is a 1 and a non hole is a 0.");
+		System.out.println("For example: 10000011");
+		for (int i = 0; i < 8; i++) {
+			System.out.print("> Row " + (i + 1) + ": ");
+			line = scan.nextLine();
+			for (int j = 0; j < line.length(); j++) {
+				key[i][j] = (int)line.charAt(j) - (int)'0';
+			}
+		}
+		GridKey gk = new GridKey(key);
+		if (GridKey.isValidKey(gk)) {
+			System.out.println("You entered this grid key:");
+			System.out.println(gk);
+			String input = "";
+			System.out.println("Enter a file name to save this grid key to.");
+			input();
+			input = scan.nextLine();
+			System.out.println();
+			saveToFile(input, gk);
+			return gk;
+		} else {
+			return null;
+		}
+	}
+	
+	public void saveToFile(String fileName, GridKey gk) {
+		PrintWriter output = null;
+		try {
+			output = new PrintWriter(new File(fileName));
+			int[][] key = gk.getKey();
+			for (int i = 0; i < key.length; i++) {
+				for (int j = 0; j < key[0].length; j++) {
+					output.print(key[i][j]);
+				}
+				if (i != key.length - 1) {
+					output.println();
+				}
+			}
+			output.close();
+		} catch (FileNotFoundException ex) {
+			System.out.println("File could not be found...");
+		}
+	}
+	
 	public void printOptionList() {
 		System.out.println("What would you like to do?");
+		System.out.println("The last grid key you entered is the one that will be use for encryption and decryption.");
 		System.out.println("1) Enter name of text file to encrypt." + "\n"
 				+ "2) Enter name of file to decrypt." + "\n"
 				+ "3) Enter a grid key file name." + "\n"
-				+ "4) Generate a grid key randomly." + "\n"
+				+ "4) Enter a grid key manually." + "\n"
+				+ "5) Generate a grid key randomly." + "\n"
 				+ "Q) Exit the program.");
 		input();
 	}
