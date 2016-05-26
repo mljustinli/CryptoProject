@@ -1,3 +1,11 @@
+/** COMMENTS ********************************************************/
+/*	Your name: Justin Li
+	Class block: H				Date: 5/26/2016
+	Lab: Final Exam
+	Title: Cryptography
+	Purpose: To create a menu driven program that encrypts and decrypts text using a grille cipher.
+*/
+
 import java.util.*;
 import java.io.*;
 
