@@ -8,10 +8,10 @@ public class Main {
 		
 		GridKey gk = null;
 		Menu menu = new Menu();
-		String inputFile = "", saveFile = "", gridFile = "";
+		String inputFile = "";
 		String input = "";
 		
-		System.out.println(GridKey.isValidKey(GridKey.genRandomKey(scan)));
+//		System.out.println(GridKey.isValidKey(GridKey.genRandomKey(scan)));
 		
 		while (!input.equals("Q") && !input.equals("q")) {
 			menu.printOptionList();
@@ -25,12 +25,16 @@ public class Main {
 				inputFile = menu.promptForInputFile(scan);
 				System.out.println();
 				try {
+					ArrayList<String> result = new ArrayList<String>();
 					fileIO = new Scanner(new File(inputFile));
 					System.out.println("The result is:");
 					while (fileIO.hasNextLine()) {
-						System.out.println(gk.encrypt(fileIO.nextLine()));
+						String encrypted = gk.encrypt(fileIO.nextLine());
+						result.add(encrypted);
+						System.out.println(encrypted);
 					}
 					System.out.println();
+					menu.saveToFile(result, scan, "encryption");
 				} catch (FileNotFoundException e) {
 					Menu.noFile();
 				}
@@ -43,13 +47,16 @@ public class Main {
 				inputFile = menu.promptForInputFile(scan);
 				System.out.println();
 				try {
+					ArrayList<String> result = new ArrayList<String>();
 					fileIO = new Scanner(new File(inputFile));
 					System.out.println("The result is:");
 					while (fileIO.hasNextLine()) {
-						System.out.println(gk.decrypt(fileIO.nextLine()));
-//						System.out.println(fileIO.nextLine());
+						String decrypted = gk.decrypt(fileIO.nextLine());
+						result.add(decrypted);
+						System.out.println(decrypted);
 					}
 					System.out.println();
+					menu.saveToFile(result, scan, "decryption");
 				} catch (FileNotFoundException e) {
 					Menu.noFile();
 				}
@@ -62,6 +69,9 @@ public class Main {
 				break;
 			case "5":
 				gk = GridKey.genRandomKey(scan);
+				System.out.println("The generated grid key is: ");
+				System.out.println(gk);
+				menu.saveToFile(gk, scan);
 				break;
 			case "Q":
 			case "q":
@@ -69,11 +79,6 @@ public class Main {
 				break;
 			}
 		}
-		
-		
-		
-		
-		
 		scan.close();
 	}
 }

@@ -1,5 +1,4 @@
 import java.util.*;
-import java.io.*;
 
 public class GridKey {
 	public static final String[] DIRS = {"North", "East", "South", "West"};

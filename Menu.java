@@ -84,22 +84,22 @@ public class Menu {
 		if (GridKey.isValidKey(gk)) {
 			System.out.println("You entered this grid key:");
 			System.out.println(gk);
-			String input = "";
-			System.out.println("Enter a file name to save this grid key to.");
-			input();
-			input = scan.nextLine();
-			System.out.println();
-			saveToFile(input, gk);
+			saveToFile(gk, scan);
 			return gk;
 		} else {
 			return null;
 		}
 	}
 	
-	public void saveToFile(String fileName, GridKey gk) {
+	public void saveToFile(GridKey gk, Scanner scan) {
+		String input = "";
+		System.out.println("Enter a file name to save this grid key to.");
+		input();
+		input = scan.nextLine();
+		
 		PrintWriter output = null;
 		try {
-			output = new PrintWriter(new File(fileName));
+			output = new PrintWriter(new File(input));
 			int[][] key = gk.getKey();
 			for (int i = 0; i < key.length; i++) {
 				for (int j = 0; j < key[0].length; j++) {
@@ -109,9 +109,33 @@ public class Menu {
 					output.println();
 				}
 			}
+			System.out.println("Grid key saved.\n");
 			output.close();
 		} catch (FileNotFoundException ex) {
-			System.out.println("File could not be found...");
+			System.out.println("File could not be found...\n");
+		}
+	}
+	
+	public void saveToFile(ArrayList<String> result, Scanner scan, String eOrD) {
+		String input = "";
+		System.out.println("Enter a file name to save the " + eOrD + " to.");
+		input();
+		input = scan.nextLine();
+		
+		PrintWriter output = null;
+		try {
+			output = new PrintWriter(new File(input));
+			for (int i = 0; i < result.size(); i++) {
+				if (i == result.size()) {
+					output.print(result.get(i));
+				} else {
+					output.println(result.get(i));
+				}
+			}
+			System.out.println("The " + eOrD + " was saved.\n");
+			output.close();
+		} catch (FileNotFoundException ex) {
+			System.out.println("File could not be found...\n");
 		}
 	}
 	
