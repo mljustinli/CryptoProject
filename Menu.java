@@ -143,7 +143,7 @@ public class Menu {
 		System.out.println("What would you like to do?");
 		System.out.println("The last grid key you entered is the one that will be use for encryption and decryption.");
 		System.out.println("1) Enter name of text file to encrypt." + "\n"
-				+ "2) Enter name of file to decrypt." + "\n"
+				+ "2) Enter name of text file to decrypt." + "\n"
 				+ "3) Enter a grid key file name." + "\n"
 				+ "4) Enter a grid key manually." + "\n"
 				+ "5) Generate a grid key randomly." + "\n"
