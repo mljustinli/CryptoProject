@@ -19,10 +19,6 @@ public class GridKey {
 		key = _key;
 	}
 	
-	public GridKey(String inputFile) {
-		
-	}
-	
 	public String encrypt(String text) {
 		String newText = "";
 		for (int i = 0; i < 64 - text.length(); i++) {
